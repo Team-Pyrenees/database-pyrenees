@@ -1,8 +1,8 @@
 const fs = require('fs');
 
-var lineReader = require('readline').createInterface({  input: require('fs').createReadStream('./questions.csv')});
+var lineReader = require('readline').createInterface({  input: require('fs').createReadStream('./answers.csv')});
 
-var stream = fs.createWriteStream("questionsNew.csv", { flags: "a" });  
+var stream = fs.createWriteStream("answersNew.csv", { flags: "a" });  
 
 stream.once("open", (fd) => {  });
 
@@ -24,11 +24,3 @@ lineReader.on('line', function (line) {
 
     stream.write(string + "\r\n");
 });
-
-// LOAD DATA INFILE '/Users/marcanthony/Desktop/HR/database-pyrenees/questions/questionsNew.csv' 
-// INTO TABLE questions 
-// FIELDS TERMINATED BY ',' 
-// ENCLOSED BY '"'
-// LINES TERMINATED BY '\n'
-
-// SELECT id, product_id, body, date_written, asker_name, asker_email, IF(reported, "true", "false") reported, helpful FROM answers limit 5;

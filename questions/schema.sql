@@ -8,10 +8,10 @@
 --     id int NOT NULL AUTO_INCREMENT PRIMARY KEY,
 --     product_id int NOT NULL,
 --     body VARCHAR(255) NOT NULL,
---     date_written int,
+--     date_written VARCHAR(30) NOT NULL,
 --     asker_name VARCHAR(40) NOT NULL,
 --     asker_email VARCHAR(60) NOT NULL,
---     reported int DEFAULT 0,
+--     reported boolean NOT NULL,
 --     helpful int DEFAULT 0,
 --     INDEX (id)
 -- );
@@ -20,10 +20,10 @@
 --     id int NOT NULL AUTO_INCREMENT PRIMARY KEY,
 --     question_id int NOT NULL,
 --     body VARCHAR(255) NOT NULL,
---     date_written int,
+--     date_written VARCHAR(30) NOT NULL,
 --     answerer_name VARCHAR(40) NOT NULL,
 --     answerer_email VARCHAR(60) NOT NULL,
---     reported int DEFAULT 0,
+--     reported boolean NOT NULL,
 --     helpful int DEFAULT 0,
 --     INDEX (id),
 --     CONSTRAINT questionID
@@ -41,10 +41,9 @@
 --     REFERENCES answers(id)
 -- );
 
--- LOAD DATA LOCAL INFILE '/Users/marcanthony/Desktop/HR/database-pyrenees/questions/answers_photos.csv'
--- INTO TABLE photos
+-- LOAD DATA LOCAL INFILE '/Users/marcanthony/Desktop/HR/database-pyrenees/questions/transform/questionsNew.csv'
+-- INTO TABLE questions
 -- FIELDS TERMINATED BY ',' 
 -- ENCLOSED BY '"'
 -- LINES TERMINATED BY '\n'
--- IGNORE 1 ROWS;
 
