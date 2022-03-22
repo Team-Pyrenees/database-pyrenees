@@ -25,6 +25,17 @@ lineReader.on('line', function (line) {
     stream.write(string + "\r\n");
 });
 
+
+
+
+
+
+
+
+
+
+
+
 // LOAD DATA INFILE '/Users/marcanthony/Desktop/HR/database-pyrenees/questions/questionsNew.csv' 
 // INTO TABLE questions 
 // FIELDS TERMINATED BY ',' 
