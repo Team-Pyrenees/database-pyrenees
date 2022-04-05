@@ -1,14 +1,14 @@
 const fs = require('fs');
 const csv = require('csv-parser');
-const db = require('../db/db.js');
+const db = require('./db/db.js');
 
 var reviews = __dirname + '/../../../DATA/reviews.csv';
 
-const results = [];
-
-fs.createReadStream(reviews)
+const etlReview = () => {
+  const readable = fs.createReadStream(reviews);
+  readable
   .pipe(csv({}))
-  .on('data', (data) => {
+  .on('data', async (data) => {
     //format date
     let temp = Date(data.date);
     let date = new Date(temp);
@@ -22,6 +22,7 @@ fs.createReadStream(reviews)
     let transformedData =
     [
       Number(data.id),
+      Number(data.product_id),
       Number(data.rating),
       parsedDateString,
       data.summary,
@@ -34,9 +35,17 @@ fs.createReadStream(reviews)
       Number(data.helpfulness)
     ];
     //load it into the database!!
-    db.insertIntoReviews(transformedData);
-    // console.log(transformedData);
+    await db.insertIntoReviews(transformedData);
+  })
+  .on('data', () => {
+    readable.pause();
+    setTimeout(() => {
+      readable.resume();
+    }, 20000);
   })
   .on('end', () => {
     console.log('INSERTED ALL REVIEWS INTO DATABASE!!!!!!!!!!!!');
   });
+}
+
+etlReview();
