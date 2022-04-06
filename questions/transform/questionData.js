@@ -1,12 +1,15 @@
 const fs = require('fs');
 const csv = require('csv-parser');
-const db = require('../db/db.js');
-// const questionsData = require('../data/questions.csv');
 
-fs.createReadStream('../data/questions.csv')
+
+fs.createReadStream('/Users/marcanthony/Desktop/HR/database-pyrenees/questions/transform/questions.csv')
   .pipe(csv({}))
   .on('data', (data) => {
-    // var stringData = Object.values(data).join(",").split(",")
+    console.log("this is data before created string", data, typeof data);
+    var stringData = Object.values(data).join(",").split(",")
+
+    console.log("this is string data", stringData, typeof stringData);
+
     let reported;
 
     if (data.reported === "0") {
@@ -32,7 +35,7 @@ fs.createReadStream('../data/questions.csv')
     //     Number(data.helpful)
     // ]
 
-    var lineReader = require('readline').createInterface({  input: require('fs').createReadStream('file.in')});lineReader.on('line', function (line) {  console.log('Line from file:', line);});
+    // var lineReader = require('readline').createInterface({  input: require('fs').createReadStream('file.in')});lineReader.on('line', function (line) {  console.log('Line from file:', line);});
 
     let id = Number(data.id);
     let product_id = Number(data.product_id);
@@ -43,16 +46,17 @@ fs.createReadStream('../data/questions.csv')
     // reported
     let helpful = Number(data.helpful);
 
-    var string = `${id},${product_id},${body},${parsedDateString},${asker_name},${asker_email},${reported},${helpful}`
+    // var string = `${id},${product_id},${body},${parsedDateString},${asker_name},${asker_email},${reported},${helpful}`;
 
-    console.log('This is the data chunk', string);
+    // var stream = fs.createWriteStream("newQuestions.csv", { flags: "a" });  
 
-    var stream = fs.createWriteStream("newQuestions.csv", { flags: "a" });  console.log(stream);  
-
-    stream.once("open", (fd) => {    stream.write(string + "\r\n");  });
+    // stream.once("open", (fd) => {    stream.write(string + "\r\n");  });
   })
   .on('end', () => {
     console.log('everything worked');
+  })
+  .on('error', function(error) {
+    console.log(error);
   });
 
 

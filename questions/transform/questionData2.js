@@ -1,13 +1,17 @@
 const fs = require('fs');
 
-var lineReader = require('readline').createInterface({  input: require('fs').createReadStream('./questions.csv')});
+var lineReader = require('readline').createInterface({  input: require('fs').createReadStream('/Users/marcanthony/Desktop/HR/database-pyrenees/questions/transform/questions.csv')}).on('error', function(err) {
+    console.log(err);
+});
 
 var stream = fs.createWriteStream("questionsNew.csv", { flags: "a" });  
 
 stream.once("open", (fd) => {  });
 
 lineReader.on('line', function (line) {
-    const newLine = line.match(/(".*?"|[^",\s]+)(?=\s*,|\s*$)/g)
+    console.log("type of original line", line, typeof line)
+    const newLine = line.match(/(".*?"|[^",\s]+)(?=\s*,|\s*$)/g);
+    console.log("line after match", newLine, typeof newLine[7]);
     const dateNumber = Number(newLine[3]);
     const newDate = new Date(dateNumber);
     let correctFormat = newDate.toISOString()
@@ -21,6 +25,8 @@ lineReader.on('line', function (line) {
     }
 
     const string = newLine.join(',');
+
+    console.log("this is the final string", string)
 
     stream.write(string + "\r\n");
 });
