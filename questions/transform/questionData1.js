@@ -5,10 +5,7 @@ const csv = require('csv-parser');
 fs.createReadStream('/Users/marcanthony/Desktop/HR/database-pyrenees/questions/transform/questions.csv')
   .pipe(csv({}))
   .on('data', (data) => {
-    console.log("this is data before created string", data, typeof data);
     var stringData = Object.values(data).join(",").split(",")
-
-    console.log("this is string data", stringData, typeof stringData);
 
     let reported;
 
